@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Access</title>
+</head>
+<body>
+  <h1>Access Camera</h1>
+  <video id="video" autoplay></video>
+  <button id="snap">Take Photo</button>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    // Access the video element and canvas
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const snap = document.getElementById('snap');
+
+    // Request access to the user's camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        video.srcObject = stream;
+      })
+      .catch(function(error) {
+        console.log("Error accessing camera: " + error);
+      });
+
+    // Capture a frame from the video feed when the button is clicked
+    snap.addEventListener('click', function() {
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    });
+  </script>
+</body>
+</html>
